@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시각장애인용 OCR-TTS 시스템</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📖 문서 읽기 도우미</h1>
+            <p>카메라로 문서를 촬영하면 음성으로 읽어드립니다</p>
+        </header>
+
+        <!-- 카메라 화면 -->
+        <div class="camera-container">
+            <video id="camera" autoplay playsinline></video>
+            
+            <!-- 안내 가이드 오버레이 -->
+            <div class="guide-overlay">
+                <div class="guide-box"></div>
+            </div>
+        </div>
+
+        <!-- 상태 메시지 -->
+        <div id="status-message" class="status-message">
+            카메라를 시작하려면 버튼을 눌러주세요
+        </div>
+
+        <div id="camera-guidance" class="camera-guidance">
+            문서를 가이드 박스 안에 맞추고, 화면을 수평으로 맞춰주세요.
+        </div>
+
+        <!-- 컨트롤 버튼 -->
+        <div class="controls">
+            <button id="start-camera-btn" class="btn btn-primary">
+                📷 카메라 시작
+            </button>
+            <button id="capture-btn" class="btn btn-success" disabled>
+                📸 촬영하기
+            </button>
+            <button id="stop-camera-btn" class="btn btn-danger" disabled>
+                ⏹️ 카메라 종료
+            </button>
+        </div>
+
+        <!-- 이미지 업로드 -->
+        <div class="upload-section">
+            <h3>또는 이미지 업로드</h3>
+            <input type="file" id="image-upload" accept="image/*" />
+            <button id="upload-btn" class="btn btn-info">
+                📁 파일에서 선택
+            </button>
+        </div>
+
+        <!-- 촬영된 이미지 표시 -->
+        <div class="result-container" style="display: none;">
+            <h2>촬영된 이미지</h2>
+            <canvas id="canvas"></canvas>
+            <img id="captured-image" alt="촬영된 이미지">
+        </div>
+
+        <!-- OCR 결과 -->
+        <div class="ocr-result-container" style="display: none;">
+            <h2>인식된 텍스트</h2>
+            <div id="ocr-result" class="ocr-result"></div>
+            <div class="result-controls">
+                <button id="read-text-btn" class="btn btn-info">
+                    🔊 다시 읽기
+                </button>
+                <button id="stop-reading-btn" class="btn btn-warning">
+                    🔇 읽기 중지
+                </button>
+            </div>
+        </div>
+
+        <!-- 로딩 스피너 -->
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>텍스트를 인식하는 중입니다...</p>
+        </div>
+    </div>
+
+    <!-- Hidden canvas for processing -->
+    <canvas id="processing-canvas" style="display: none;"></canvas>
+
+    <!-- Tesseract.js CDN -->
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
+    
+    <!-- 커스텀 스크립트 -->
+    <script src="tts.js"></script>
+    <script src="ocr.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
